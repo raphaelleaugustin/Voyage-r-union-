@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Réunion 974">
+<meta name="theme-color" content="#1a4a2e">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="manifest" href="manifest.json">
+<title>Réunion 974 🌋</title>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --jungle: #1a4a2e;
+  --ocean: #0e6e8c;
+  --lagon: #22c9e0;
+  --sand: #f5e6c8;
+  --coral: #ff6b45;
+  --volcano: #e84520;
+  --sun: #ffc845;
+  --leaf: #3cb86a;
+  --white: #fffdf8;
+  --dark: #12302a;
+  --card-bg: rgba(255,253,248,0.95);
+  --text: #1c3a30;
+  --muted: #5a7a6a;
+  --serif: 'Lobster', cursive;
+  --sans: 'Nunito', sans-serif;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:var(--jungle);font-family:var(--sans);overflow:hidden;}
+#app{display:flex;flex-direction:column;height:100%;height:100dvh;background:var(--white);}
+
+/* ===== HERO HEADER ===== */
+#hero-header {
+flex-shrink:0;
+position:relative;
+height:200px;
+overflow:hidden;
+background: linear-gradient(160deg, #0e6e8c 0%, #1a8a5a 40%, #1a4a2e 100%);
+}
+.hero-sky {
+position:absolute;inset:0;
+background: linear-gradient(to bottom, #87ceeb 0%, #b8e8f0 30%, #22c9e0 60%, #1a8a5a 100%);
+}
+/* animated waves */
+.wave {
+position:absolute;bottom:0;width:200%;height:60px;
+background:var(–white);
+border-radius:50% 50% 0 0 / 100% 100% 0 0;
+animation: wave-move 4s ease-in-out infinite;
+}
+.wave2 { bottom:8px; opacity:.4; animation-delay:-2s; background:#b8e8f0; }
+@keyframes wave-move { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-8%)} }
+
+/* volcano shape */
+.volcano-shape {
+position:absolute;bottom:40px;right:20px;
+width:0;height:0;
+border-left:55px solid transparent;
+border-right:55px solid transparent;
+border-bottom:90px solid #2d5a3d;
+filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));
+}
+.volcano-top {
+position:absolute;bottom:118px;right:38px;
+width:0;height:0;
+border-left:18px solid transparent;
+border-right:18px solid transparent;
+border-bottom:30px solid #e84520;
+}
+.lava-glow {
+position:absolute;bottom:148px;right:48px;
+width:15px;height:15px;border-radius:50%;
+background:radial-gradient(circle, #ffc845, #ff6b45, transparent);
+animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.7}}
+
+/* palm tree */
+.palm {
+position:absolute;bottom:38px;left:16px;
+}
+.palm-trunk {
+width:8px;height:60px;
+background:linear-gradient(to top, #6b4226, #8b5a2b);
+border-radius:4px;
+transform:rotate(-8deg);
+transform-origin:bottom center;
+}
+.palm-leaves {
+position:absolute;top:-22px;left:-22px;
+font-size:44px;
+transform:rotate(10deg);
+}
+
+/* sun */
+.sun-circle {
+position:absolute;top:22px;left:50%;transform:translateX(-50%);
+width:42px;height:42px;border-radius:50%;
+background:radial-gradient(circle, #ffe866, #ffc845);
+box-shadow:0 0 20px rgba(255,200,70,.6);
+animation:sunpulse 3s ease-in-out infinite;
+}
+@keyframes sunpulse{0%,100%{box-shadow:0 0 20px rgba(255,200,70,.6)}50%{box-shadow:0 0 35px rgba(255,200,70,.9)}}
+
+/* header text */
+.hero-text {
+position:absolute;bottom:60px;left:0;right:0;
+text-align:center;
+color:white;
+text-shadow:0 2px 12px rgba(0,0,0,.4);
+}
+.hero-main {font-family:var(–serif);font-size:42px;line-height:1;letter-spacing:1px;}
+.hero-main span{color:var(–sun);}
+.hero-dates {font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.9;margin-top:4px;}
+
+/* countdown badge */
+.countdown-badge {
+position:absolute;top:calc(var(–safe-top) + 10px);right:14px;
+background:rgba(255,255,255,.2);backdrop-filter:blur(8px);
+border:1px solid rgba(255,255,255,.35);
+border-radius:20px;padding:5px 12px;
+color:white;font-size:11px;font-weight:700;
+text-align:center;
+}
+.countdown-badge .big{font-family:var(–serif);font-size:18px;display:block;line-height:1;}
+
+/* ===== BOTTOM NAV ===== */
+#bottom-nav {
+flex-shrink:0;
+display:flex;
+background:var(–jungle);
+padding:8px 0 calc(var(–safe-bot) + 6px);
+}
+.nav-btn {
+flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+border:none;background:none;cursor:pointer;padding:4px;
+color:rgba(255,255,255,.45);font-family:var(–sans);transition:color .2s;
+}
+.nav-btn.active{color:var(–sun);}
+.nav-icon{font-size:22px;line-height:1;}
+.nav-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+
+/* ===== CONTENT ===== */
+#content{flex:1;overflow-y:auto;scrollbar-width:none;background:var(–white);}
+#content::-webkit-scrollbar{display:none;}
+.view{display:none;}
+.view.active{display:block;}
+
+/* ===== ZONE BANNERS ===== */
+.zone-banner {
+margin:16px 14px 8px;
+border-radius:16px;
+padding:10px 16px;
+display:flex;align-items:center;gap:8px;
+font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+color:white;
+}
+.zone-banner.jungle{background:linear-gradient(135deg,#1a4a2e,#2d7a4e);}
+.zone-banner.ocean{background:linear-gradient(135deg,#0e6e8c,#22b8d0);}
+.zone-banner.fire{background:linear-gradient(135deg,#c0350a,#e84520);}
+.zone-banner.forest{background:linear-gradient(135deg,#2d6a1f,#3cb86a);}
+.zone-banner.lagon{background:linear-gradient(135deg,#0891b2,#22c9e0);}
+.zone-icon{font-size:22px;}
+
+/* ===== DAY CARDS ===== */
+.day-card {
+margin:0 14px 10px;
+background:var(–card-bg);
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 2px 12px rgba(26,74,46,.1);
+border:1.5px solid rgba(26,74,46,.08);
+transition:box-shadow .2s;
+}
+.day-card.open{box-shadow:0 4px 20px rgba(26,74,46,.18);}
+.day-top {
+position:relative;overflow:hidden;height:90px;cursor:pointer;
+}
+.day-gradient{
+position:absolute;inset:0;
+}
+.day-overlay{
+position:absolute;inset:0;
+background:linear-gradient(to right, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 100%);
+}
+.day-emoji{
+position:absolute;right:14px;top:50%;transform:translateY(-50%);
+font-size:42px;opacity:.85;
+filter:drop-shadow(0 2px 6px rgba(0,0,0,.3));
+}
+.day-meta{
+position:absolute;left:14px;top:50%;transform:translateY(-50%);
+color:white;
+}
+.day-num-badge{
+display:inline-block;background:rgba(255,255,255,.25);backdrop-filter:blur(4px);
+border:1px solid rgba(255,255,255,.4);border-radius:8px;
+padding:2px 8px;font-size:10px;font-weight:800;letter-spacing:.08em;
+margin-bottom:4px;
+}
+.day-title-text{font-size:16px;font-weight:800;line-height:1.2;text-shadow:0 1px 6px rgba(0,0,0,.4);}
+.day-date-text{font-size:11px;opacity:.85;font-weight:600;margin-top:2px;}
+.day-tags-row{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap;}
+.dtag{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700;background:rgba(255,255,255,.25);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.3);color:white;text-transform:uppercase;letter-spacing:.05em;}
+.expand-arrow{
+position:absolute;bottom:8px;right:12px;
+color:rgba(255,255,255,.7);font-size:11px;
+transition:transform .25s;
+}
+.day-card.open .expand-arrow{transform:rotate(180deg);}
+
+/* day body */
+.day-body{display:none;padding:14px 16px;}
+.day-card.open .day-body{display:block;}
+.day-desc{font-size:13px;color:var(–text);line-height:1.65;}
+.day-desc strong{color:var(–jungle);font-weight:800;}
+
+.info-chip {
+display:inline-flex;align-items:center;gap:5px;
+background:#f0faf4;border:1px solid #c6e8d4;
+border-radius:10px;padding:7px 11px;
+font-size:12px;color:var(–jungle);font-weight:600;
+margin-top:8px;margin-right:6px;
+}
+.tip-bubble{
+margin-top:10px;
+background:linear-gradient(135deg,#fff9e6,#fff3cc);
+border:1.5px solid #fcd96a;
+border-radius:12px;padding:10px 12px;
+font-size:12px;color:#7a5500;line-height:1.5;
+display:flex;gap:8px;align-items:flex-start;
+}
+.tip-bubble-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.map-chip{
+display:inline-flex;align-items:center;gap:5px;
+background:#e8f4ff;border:1px solid #b3d4ff;
+border-radius:10px;padding:7px 11px;
+font-size:12px;color:#1a5fa0;font-weight:600;
+margin-top:8px;text-decoration:none;
+}
+
+/* ===== INFOS VIEW ===== */
+.section-pad{padding:0 14px 100px;}
+.section-title{
+font-family:var(–serif);font-size:28px;color:var(–jungle);
+padding:18px 14px 10px;
+}
+.info-card{
+background:var(–card-bg);border-radius:18px;
+padding:14px 16px;margin-bottom:10px;
+box-shadow:0 2px 10px rgba(26,74,46,.08);
+border:1.5px solid rgba(26,74,46,.07);
+}
+.info-card-title{
+font-size:14px;font-weight:800;color:var(–jungle);
+margin-bottom:8px;display:flex;align-items:center;gap:7px;
+}
+.info-card p,.info-card li{font-size:12.5px;color:var(–muted);line-height:1.65;}
+.info-card ul{padding-left:16px;}
+.info-card li{margin-bottom:3px;}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.flavor-tag{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:700;}
+.flavor-food{background:#fff0e8;color:#c04010;}
+.flavor-drink{background:#e8f8ee;color:#1a6a30;}
+
+/* ===== CHECKLIST ===== */
+.check-hero{
+margin:14px;border-radius:18px;overflow:hidden;
+background:linear-gradient(135deg,#1a4a2e,#2d9a5e);
+padding:16px;color:white;
+}
+.check-hero-title{font-family:var(–serif);font-size:24px;margin-bottom:4px;}
+.check-hero-sub{font-size:12px;opacity:.8;}
+.check-prog-wrap{margin-top:10px;}
+.check-prog-bar-bg{background:rgba(255,255,255,.2);border-radius:10px;height:6px;}
+.check-prog-bar{height:6px;border-radius:10px;background:var(–sun);transition:width .3s;}
+.check-prog-text{font-size:11px;opacity:.8;margin-top:4px;font-weight:700;}
+.check-group{background:var(–card-bg);border-radius:18px;margin:0 14px 10px;overflow:hidden;box-shadow:0 2px 10px rgba(26,74,46,.08);border:1.5px solid rgba(26,74,46,.07);}
+.check-group-hdr{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(–muted);padding:10px 14px 8px;border-bottom:1px solid rgba(26,74,46,.08);}
+.check-item{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(26,74,46,.06);cursor:pointer;}
+.check-item:last-child{border-bottom:none;}
+.check-item:active{background:rgba(26,74,46,.04);}
+.chk{width:22px;height:22px;border-radius:7px;border:2px solid rgba(26,74,46,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;background:white;}
+.check-item.done .chk{background:var(–leaf);border-color:var(–leaf);}
+.check-item.done .chk::after{content:‘✓’;font-size:13px;color:white;font-weight:800;}
+.check-item.done .chk-label{text-decoration:line-through;color:rgba(26,74,46,.35);}
+.chk-label{font-size:13px;font-weight:600;color:var(–text);}
+
+/* ===== BUDGET ===== */
+.budget-hero{
+margin:14px;border-radius:18px;
+background:linear-gradient(135deg,#0e6e8c,#22c9e0);
+padding:16px;color:white;
+}
+.budget-hero-title{font-family:var(–serif);font-size:24px;margin-bottom:2px;}
+.budget-total-big{font-family:var(–serif);font-size:36px;margin-top:6px;}
+.budget-sub{font-size:11px;opacity:.8;}
+.budget-card{background:var(–card-bg);border-radius:18px;margin:0 14px 10px;overflow:hidden;box-shadow:0 2px 10px rgba(14,110,140,.08);border:1.5px solid rgba(14,110,140,.08);}
+.budget-card-hdr{font-size:12px;font-weight:800;color:var(–ocean);padding:10px 14px 8px;border-bottom:1px solid rgba(14,110,140,.07);display:flex;align-items:center;gap:6px;}
+.budget-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(14,110,140,.06);}
+.budget-row:last-child{border-bottom:none;}
+.budget-item-name{font-size:13px;font-weight:600;color:var(–text);}
+.budget-item-val{font-size:13px;font-weight:800;color:var(–ocean);}
+
+/* ===== INSTALL HINT ===== */
+.install-bar{
+margin:14px 14px 0;border-radius:14px;
+background:linear-gradient(135deg,rgba(255,107,69,.12),rgba(255,200,70,.1));
+border:1.5px solid rgba(255,107,69,.25);
+padding:12px 14px;display:none;
+}
+.install-bar h4{font-size:13px;font-weight:800;color:var(–coral);margin-bottom:4px;}
+.install-bar p{font-size:11px;color:var(–muted);line-height:1.55;}
+.install-steps{margin-top:6px;}
+.is{font-size:11px;color:var(–muted);padding:2px 0;display:flex;gap:6px;}
+.is strong{color:var(–coral);}
+
+/* bottom padding */
+.pb{height:80px;}
+</style>
+
+</head>
+<body>
+<div id="app">
+
+  <!-- HERO HEADER -->
+
+  <div id="hero-header">
+    <div class="hero-sky"></div>
+    <div class="sun-circle"></div>
+    <div class="palm">
+      <div class="palm-trunk"></div>
+      <div class="palm-leaves">🌴</div>
+    </div>
+    <div class="volcano-shape"></div>
+    <div class="volcano-top"></div>
+    <div class="lava-glow"></div>
+    <div class="hero-text">
+      <div class="hero-main">La <span>Réunion</span></div>
+      <div class="hero-dates">2 mai — 15 mai · 2 explorateurs</div>
+    </div>
+    <div class="countdown-badge">
+      <span class="big" id="cd-big">—</span>
+      <span id="cd-small" style="font-size:9px;opacity:.85;">jours</span>
+    </div>
+    <div class="wave wave2"></div>
+    <div class="wave"></div>
+  </div>
+
+  <!-- CONTENT -->
+
+  <div id="content">
+
+```
+<!-- PROGRAMME -->
+<div id="view-programme" class="view active">
+
+  <div class="install-bar" id="install-bar">
+    <h4>📲 Installe l'appli !</h4>
+    <p>Ajoute cette page à ton écran d'accueil pour l'avoir partout, même sans réseau.</p>
+    <div class="install-steps">
+      <div class="is"><strong>iPhone</strong> Partager → "Sur l'écran d'accueil"</div>
+      <div class="is"><strong>Android</strong> Menu ⋮ → "Ajouter à l'écran d'accueil"</div>
+    </div>
+  </div>
+
+  <!-- ZONE 1 -->
+  <div class="zone-banner jungle"><span class="zone-icon">🌿</span> Nord — Arrivée · 2-3 mai</div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#1a6a50,#2d9a6e)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">✈️</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 1</div>
+        <div class="day-title-text">Arrivée · Saint-Denis</div>
+        <div class="day-date-text">Vendredi 2 mai</div>
+        <div class="day-tags-row"><span class="dtag">Installation</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">Récupération de la voiture à <strong>Roland Garros</strong>. Balade dans Saint-Denis : le Barachois, la rue de Paris. Premier <strong>carry créole</strong> pour mettre le pied dans le bain.</p>
+      <span class="info-chip">🏠 Gîte Saint-Denis · ~50€/nuit</span>
+      <div class="tip-bubble"><span class="tip-bubble-icon">💡</span>Réservez la voiture bien en avance — mai est chargé !</div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#0d5a3a,#1a8a5a)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🏔️</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 2</div>
+        <div class="day-title-text">Belvédère du Maïdo</div>
+        <div class="day-date-text">Samedi 3 mai</div>
+        <div class="day-tags-row"><span class="dtag">🥾 Trail</span><span class="dtag">2205 m</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">Départ avant 7h pour le panorama sur <strong>Mafate</strong> — vue à couper le souffle. Balade sur les crêtes du Grand Bord (~8 km, +600 m). Pique-nique au sommet.</p>
+      <div class="tip-bubble"><span class="tip-bubble-icon">☁️</span>Partez très tôt ! Les nuages envahissent les sommets dès 10h.</div>
+      <a class="map-chip" href="https://maps.google.com/?q=Belvédère+du+Maïdo+La+Réunion" target="_blank">📍 Voir sur Maps</a>
+    </div>
+  </div>
+
+  <!-- ZONE 2 -->
+  <div class="zone-banner jungle" style="background:linear-gradient(135deg,#3a2a10,#6b4a1a)"><span class="zone-icon">⛰️</span> Cirque de Cilaos · 4-6 mai</div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#5a3a10,#8b6020)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🍷</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 3</div>
+        <div class="day-title-text">Route des 400 virages</div>
+        <div class="day-date-text">Dimanche 4 mai</div>
+        <div class="day-tags-row"><span class="dtag">🍋 Lentilles</span><span class="dtag">🍷 Vin</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">La route mythique vers Cilaos. Visite de la <strong>coopérative de lentilles</strong> et dégustation du <strong>vin de Cilaos</strong> — unique en France à cette altitude !</p>
+      <span class="info-chip">🏠 Gîte Cilaos · ~65€/nuit</span>
+      <div class="tip-bubble"><span class="tip-bubble-icon">⚠️</span>Réservez le gîte de Cilaos bien à l'avance, ça part très vite !</div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#1a1a3a,#2a2a5a)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">⭐</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 4</div>
+        <div class="day-title-text">Piton des Neiges · 3070 m</div>
+        <div class="day-date-text">Lundi 5 mai · départ nocturne</div>
+        <div class="day-tags-row"><span class="dtag">🥾 Trail</span><span class="dtag">+1600m</span><span class="dtag">⭐ Incontournable</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc"><strong>Point culminant de l'océan Indien !</strong> Départ 2h-3h du matin sous les étoiles. Lever de soleil au sommet. ~14 km A/R. Une expérience de vie.</p>
+      <div class="tip-bubble"><span class="tip-bubble-icon">🔦</span>Lampe frontale indispensable + polaire (il fait froid au sommet même en mai).</div>
+      <a class="map-chip" href="https://maps.google.com/?q=Gite+Piton+des+Neiges+Cilaos" target="_blank">📍 Gîte du Piton des Neiges</a>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#005f73,#0a9396)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🤿</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 5</div>
+        <div class="day-title-text">Repos & Canyoning</div>
+        <div class="day-date-text">Mardi 6 mai</div>
+        <div class="day-tags-row"><span class="dtag">💦 Canyoning</span><span class="dtag">😎 Détente</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">Repos mérité le matin. L'après-midi : <strong>canyoning dans les ravines de Cilaos</strong> avec guide — l'un des plus beaux au monde ! Soirée rougail saucisse.</p>
+      <div class="tip-bubble"><span class="tip-bubble-icon">💡</span>~60-80€/pers avec guide. Accessible même sans expérience.</div>
+    </div>
+  </div>
+
+  <!-- ZONE 3 -->
+  <div class="zone-banner fire"><span class="zone-icon">🌋</span> Grand Sud & Volcan · 7-9 mai</div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#0a4a6a,#1080b0)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🏖️</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 6</div>
+        <div class="day-title-text">Saint-Pierre · lagon</div>
+        <div class="day-date-text">Mercredi 7 mai</div>
+        <div class="day-tags-row"><span class="dtag">🌊 Lagon</span><span class="dtag">🛍️ Marché</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">Transition vers le Sud. <strong>Saint-Pierre</strong> : baignade au lagon (eaux calmes, protégé). Soirée animée en bord de mer avec les pieds dans le sable.</p>
+      <span class="info-chip">🏠 Chambre d'hôtes · ~60€/nuit</span>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#7a1a00,#c0350a)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🌋</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 7</div>
+        <div class="day-title-text">Piton de la Fournaise</div>
+        <div class="day-date-text">Jeudi 8 mai</div>
+        <div class="day-tags-row"><span class="dtag">🌋 Volcan actif</span><span class="dtag">🥾 Trail</span><span class="dtag">⭐ Incontournable</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">La journée la plus spectaculaire. Départ du <strong>Pas de Bellecombe</strong> : trail sur l'Enclos Fouqué, approche du cratère. Paysage de lave noire absolument lunaire.</p>
+      <div class="tip-bubble"><span class="tip-bubble-icon">🌋</span>Vérifiez l'état du volcan sur l'Observatoire Volcanologique avant de partir !</div>
+      <a class="map-chip" href="https://www.ipgp.fr/fr/ovpf/actualite-volcanique" target="_blank">🌐 Observatoire volcan</a>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#1a1a1a,#3a2a20)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🌊</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 8</div>
+        <div class="day-title-text">Cap Méchant · Anse des Cascades</div>
+        <div class="day-date-text">Vendredi 9 mai</div>
+        <div class="day-tags-row"><span class="dtag">🪨 Lave noire</span><span class="dtag">🌿 Épices</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc"><strong>Cap Méchant</strong> : falaises de lave battues par les vagues. <strong>Anse des Cascades</strong> : une cascade qui se jette directement dans la mer — magique. Jardin des épices de Saint-Philippe.</p>
+      <a class="map-chip" href="https://maps.google.com/?q=Cap+Méchant+La+Réunion" target="_blank">📍 Cap Méchant</a>
+    </div>
+  </div>
+
+  <!-- ZONE 4 -->
+  <div class="zone-banner forest"><span class="zone-icon">🌿</span> Rhumerie & Salazie · 10-12 mai</div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#3a1a5a,#6a3a9a)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🥃</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 9</div>
+        <div class="day-title-text">Rhumerie Isautier · Hell-Bourg</div>
+        <div class="day-date-text">Samedi 10 mai</div>
+        <div class="day-tags-row"><span class="dtag">🥃 Rhumerie</span><span class="dtag">🏘️ Village classé</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">Matin : <strong>Maison Isautier</strong> à Saint-Pierre — la plus ancienne distillerie de l'île (depuis 1845) ! Visite guidée + dégustation de rhums arrangés. Route vers Salazie, cascade du <strong>Voile de la Mariée</strong>. Arrivée à Hell-Bourg, village classé.</p>
+      <span class="info-chip">🏠 Gîte Hell-Bourg table d'hôte · ~65€</span>
+      <div class="tip-bubble"><span class="tip-bubble-icon">💡</span>Achetez les rhums arrangés à la distillerie — bien moins cher qu'à l'aéroport !</div>
+      <a class="map-chip" href="https://maps.google.com/?q=Maison+Isautier+Saint-Pierre+Réunion" target="_blank">📍 Maison Isautier</a>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#0d3a1a,#1a6a2a)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🌲</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 10</div>
+        <div class="day-title-text">Forêt Bébour-Bélouve</div>
+        <div class="day-date-text">Dimanche 11 mai</div>
+        <div class="day-tags-row"><span class="dtag">🥾 Trail UNESCO</span><span class="dtag">🌫️ Brume</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">Trail dans la <strong>forêt de tamarins des hauts</strong> classée au patrimoine mondial. Paysage brumeux et mystérieux — les tec-tecs chantent partout. Le parcours de la Diagonale des Fous !</p>
+      <div class="tip-bubble"><span class="tip-bubble-icon">🌫️</span>Emportez un coupe-vent : la forêt est souvent dans les nuages, mais c'est sa magie.</div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#3a2a00,#7a5a10)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🌿</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 11</div>
+        <div class="day-title-text">Vanille Bourbon · Côte Est</div>
+        <div class="day-date-text">Lundi 12 mai</div>
+        <div class="day-tags-row"><span class="dtag">🌿 Vanille</span><span class="dtag">🛕 Temples</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">Visite d'une <strong>exploitation de vanille Bourbon</strong> — La Réunion en est le berceau mondial ! Marché de Saint-Benoît. Temples tamouls colorés de Saint-André. Plage de sable noir.</p>
+    </div>
+  </div>
+
+  <!-- ZONE 5 -->
+  <div class="zone-banner lagon"><span class="zone-icon">🐠</span> Lagon Ouest & retour · 13-15 mai</div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#006080,#0899b8)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🐢</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 12</div>
+        <div class="day-title-text">Lagon de la Saline · snorkeling</div>
+        <div class="day-date-text">Mardi 13 mai</div>
+        <div class="day-tags-row"><span class="dtag">🐢 Tortues</span><span class="dtag">🤿 Snorkeling</span><span class="dtag">🏖️ Plage</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc"><strong>Le plus beau lagon de La Réunion !</strong> Snorkeling avec des tortues marines et des poissons coralliens. Eau cristalline. Plage de Boucan Canot en fin de journée.</p>
+      <span class="info-chip">🏠 Location Saint-Gilles · ~65€/nuit</span>
+      <div class="tip-bubble"><span class="tip-bubble-icon">🐠</span>Matériel de snorkeling à louer sur place. Ne nagez que dans les lagons protégés !</div>
+      <a class="map-chip" href="https://maps.google.com/?q=Plage+de+la+Saline+les+Bains+Réunion" target="_blank">📍 Plage de la Saline</a>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#1a5a2a,#2a9a4a)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">🛒</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 13</div>
+        <div class="day-title-text">Marché Saint-Paul · balade littorale</div>
+        <div class="day-date-text">Mercredi 14 mai</div>
+        <div class="day-tags-row"><span class="dtag">🛒 Grand marché</span><span class="dtag">🥾 Littorale</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc"><strong>Grand marché du mercredi</strong> (6h-15h) : épices, rhums arrangés, artisanat. Puis balade sur le sentier du littoral vue mer (~6 km, tout plat). Dernier carry ou rougail en soirée.</p>
+      <div class="tip-bubble"><span class="tip-bubble-icon">🛍️</span>À ramener : rhum arrangé, vanille, café Bourbon Pointu, épices, lentilles de Cilaos.</div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleCard(this)">
+    <div class="day-top">
+      <div class="day-gradient" style="background:linear-gradient(135deg,#2a2a2a,#4a4a4a)"></div>
+      <div class="day-overlay"></div>
+      <div class="day-emoji">👋</div>
+      <div class="day-meta">
+        <div class="day-num-badge">JOUR 14</div>
+        <div class="day-title-text">Au revoir La Réunion...</div>
+        <div class="day-date-text">Jeudi 15 mai · Départ</div>
+        <div class="day-tags-row"><span class="dtag">✈️ Retour</span></div>
+      </div>
+      <div class="expand-arrow">▼</div>
+    </div>
+    <div class="day-body">
+      <p class="day-desc">Dernier café créole. Retour de voiture. Si l'heure de vol le permet : dernière balade sur <strong>Boucan Canot</strong> (10 min de l'aéroport).</p>
+      <div class="tip-bubble"><span class="tip-bubble-icon">💡</span>Les souvenirs sont moins chers en ville qu'à l'aéroport — faites vos achats avant !</div>
+    </div>
+  </div>
+
+  <div class="pb"></div>
+</div>
+
+<!-- INFOS -->
+<div id="view-infos" class="view">
+  <div class="section-title">Infos pratiques</div>
+  <div class="section-pad">
+
+    <div class="info-card">
+      <div class="info-card-title">🚗 Location de voiture</div>
+      <ul>
+        <li>Réservez avant le départ (mai = période chargée)</li>
+        <li>Budget : ~350-450€ pour 13 jours</li>
+        <li>Assurance tous risques conseillée (routes de montagne !)</li>
+        <li>Faites le plein dès que possible en altitude</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">🏠 Hébergements prioritaires</div>
+      <ul>
+        <li><strong>Gîte du Piton des Neiges</strong> (Cilaos) → réservez des mois à l'avance, c'est très demandé</li>
+        <li><strong>Gîte à Hell-Bourg</strong> (Salazie) → souvent complet rapidement</li>
+        <li>Reste : Gîtes de France Réunion, Airbnb local</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">🍽️ Ce qu'il faut absolument goûter</div>
+      <div class="tag-cloud">
+        <span class="flavor-tag flavor-food">Carry poulet</span>
+        <span class="flavor-tag flavor-food">Rougail saucisse</span>
+        <span class="flavor-tag flavor-food">Cari bichique</span>
+        <span class="flavor-tag flavor-food">Samoussas</span>
+        <span class="flavor-tag flavor-food">Bonbons piment</span>
+        <span class="flavor-tag flavor-drink">Rhum arrangé</span>
+        <span class="flavor-tag flavor-drink">Vin de Cilaos</span>
+        <span class="flavor-tag flavor-drink">Café Bourbon Pointu</span>
+        <span class="flavor-tag flavor-drink">Jus de canne</span>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">🎒 Équipement trail indispensable</div>
+      <ul>
+        <li>Chaussures de trail imperméables</li>
+        <li>Lampe frontale (Piton des Neiges nocturne)</li>
+        <li>Coupe-vent léger + polaire (altitude)</li>
+        <li>Bâtons de marche (Piton des Neiges)</li>
+        <li>Crème solaire SPF 50+ (rayonnement tropical !)</li>
+        <li>2L d'eau minimum par sortie</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">🌊 Sécurité mer</div>
+      <ul>
+        <li>Ne nagez <strong>jamais</strong> hors des lagons protégés (requins)</li>
+        <li>OK : Saline-les-Bains, Saint-Pierre, Saint-Gilles</li>
+        <li>Consultez le CHOR avant toute baignade</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">📱 Numéros utiles</div>
+      <ul>
+        <li>Urgences : <strong>15 / 18 / 112</strong></li>
+        <li>Observatoire volcan : <strong>0262 27 38 51</strong></li>
+        <li>Météo France Réunion : <strong>0892 68 08 08</strong></li>
+        <li>ONF (sentiers) : <strong>onf.fr/reunion</strong></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- CHECKLIST -->
+<div id="view-checklist" class="view">
+  <div class="check-hero">
+    <div class="check-hero-title">Ma checklist 🎒</div>
+    <div class="check-hero-sub">Tout cocher avant de partir !</div>
+    <div class="check-prog-wrap">
+      <div class="check-prog-bar-bg"><div class="check-prog-bar" id="chk-bar" style="width:0%"></div></div>
+      <div class="check-prog-text" id="chk-txt">0 / 0 cochés</div>
+    </div>
+  </div>
+
+  <div class="check-group">
+    <div class="check-group-hdr">À réserver avant le départ</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Vols aller-retour ✈️</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Location de voiture 13 jours 🚗</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Gîte du Piton des Neiges (Cilaos) 🏔️</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Gîte à Hell-Bourg (Salazie) 🌿</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Autres hébergements 🏠</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Guide canyoning Cilaos 💦</span></div>
+  </div>
+
+  <div class="check-group">
+    <div class="check-group-hdr">Équipement trail & montagne 🥾</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Chaussures de trail imperméables</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Lampe frontale + piles de rechange 🔦</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Bâtons de marche</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Coupe-vent imperméable</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Polaire / couches chaudes</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Sac à dos trail 20-25L</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Gourde ou poche à eau 2L</span></div>
+  </div>
+
+  <div class="check-group">
+    <div class="check-group-hdr">Plage & mer 🐠</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Masque & tuba snorkeling 🤿</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Crème solaire SPF 50+ (×2) ☀️</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Chaussons aquatiques</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Serviette microfibre</span></div>
+  </div>
+
+  <div class="check-group">
+    <div class="check-group-hdr">Documents & divers 📄</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Carte d'identité / passeport valide</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Permis de conduire 🚗</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Carte vitale + mutuelle 💳</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">App AllTrails / Randopitons installée 📱</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="chk"></div><span class="chk-label">Adaptateur électrique (pas nécessaire ici 🇫🇷)</span></div>
+  </div>
+
+  <div class="pb"></div>
+</div>
+
+<!-- BUDGET -->
+<div id="view-budget" class="view">
+  <div class="budget-hero">
+    <div class="budget-hero-title">Budget du voyage 💶</div>
+    <div class="budget-sub">Estimation pour 2 personnes · 13 nuits</div>
+    <div class="budget-total-big">~3 000 – 3 600 €</div>
+    <div class="budget-sub" style="margin-top:4px">Hors vols : ~1 500 – 1 900 €</div>
+  </div>
+
+  <div class="budget-card">
+    <div class="budget-card-hdr">✈️ Transport</div>
+    <div class="budget-row"><span class="budget-item-name">Vols A/R × 2</span><span class="budget-item-val">800 – 1 200 €</span></div>
+    <div class="budget-row"><span class="budget-item-name">Location voiture 13j</span><span class="budget-item-val">350 – 450 €</span></div>
+    <div class="budget-row"><span class="budget-item-name">Carburant</span><span class="budget-item-val">~80 €</span></div>
+  </div>
+
+  <div class="budget-card">
+    <div class="budget-card-hdr">🏠 Hébergement</div>
+    <div class="budget-row"><span class="budget-item-name">Gîtes / chambres d'hôtes (13 nuits)</span><span class="budget-item-val">780 – 1 000 €</span></div>
+    <div class="budget-row"><span class="budget-item-name">Moy. ~60-75€ / nuit pour 2</span><span class="budget-item-val"></span></div>
+  </div>
+
+  <div class="budget-card">
+    <div class="budget-card-hdr">🍽️ Alimentation</div>
+    <div class="budget-row"><span class="budget-item-name">Restaurants créoles</span><span class="budget-item-val">400 – 500 €</span></div>
+    <div class="budget-row"><span class="budget-item-name">Pique-niques & marchés</span><span class="budget-item-val">150 – 200 €</span></div>
+  </div>
+
+  <div class="budget-card">
+    <div class="budget-card-hdr">🎯 Activités</div>
+    <div class="budget-row"><span class="budget-item-name">Canyoning Cilaos (×2)</span><span class="budget-item-val">140 – 160 €</span></div>
+    <div class="budget-row"><span class="budget-item-name">Visites (Isautier, vanille…)</span><span class="budget-item-val">60 – 80 €</span></div>
+    <div class="budget-row"><span class="budget-item-name">Trails & randonnées</span><span class="budget-item-val" style="color:var(--leaf)">Gratuit 🎉</span></div>
+  </div>
+
+  <div class="budget-card">
+    <div class="budget-card-hdr">🛍️ Souvenirs</div>
+    <div class="budget-row"><span class="budget-item-name">Rhums, vanille, épices, café</span><span class="budget-item-val">80 – 150 €</span></div>
+  </div>
+
+  <div class="pb"></div>
+</div>
+```
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+
+  <div id="bottom-nav">
+    <button class="nav-btn active" onclick="switchView('programme',this)">
+      <div class="nav-icon">🗓️</div>
+      <div class="nav-label">Programme</div>
+    </button>
+    <button class="nav-btn" onclick="switchView('infos',this)">
+      <div class="nav-icon">🌴</div>
+      <div class="nav-label">Infos</div>
+    </button>
+    <button class="nav-btn" onclick="switchView('checklist',this)">
+      <div class="nav-icon">✅</div>
+      <div class="nav-label">Checklist</div>
+    </button>
+    <button class="nav-btn" onclick="switchView('budget',this)">
+      <div class="nav-icon">💶</div>
+      <div class="nav-label">Budget</div>
+    </button>
+  </div>
+
+</div>
+<script>
+// Countdown
+function countdown(){
+  const depart=new Date('2025-05-02');
+  const retour=new Date('2025-05-15T23:59:00');
+  const now=new Date();
+  const big=document.getElementById('cd-big');
+  const small=document.getElementById('cd-small');
+  if(now<depart){
+    const d=Math.ceil((depart-now)/86400000);
+    big.textContent=d;small.textContent='jours avant !';
+  } else if(now<=retour){
+    const d=Math.floor((now-depart)/86400000)+1;
+    big.textContent='J'+d;small.textContent='vous y êtes !';
+  } else {
+    big.textContent='🌋';small.textContent='souvenirs';
+  }
+}
+countdown();
+
+// View switching
+function switchView(name,btn){
+document.querySelectorAll(’.view’).forEach(v=>v.classList.remove(‘active’));
+document.getElementById(‘view-’+name).classList.add(‘active’);
+document.querySelectorAll(’.nav-btn’).forEach(b=>b.classList.remove(‘active’));
+btn.classList.add(‘active’);
+document.getElementById(‘content’).scrollTop=0;
+}
+
+// Cards
+function toggleCard(card){
+card.classList.toggle(‘open’);
+}
+
+// Checklist
+function toggleCheck(item){
+item.classList.toggle(‘done’);
+saveChecks();updateProg();
+}
+function updateProg(){
+const all=document.querySelectorAll(’.check-item’);
+const done=document.querySelectorAll(’.check-item.done’);
+const p=all.length?Math.round(done.length/all.length*100):0;
+document.getElementById(‘chk-bar’).style.width=p+’%’;
+document.getElementById(‘chk-txt’).textContent=done.length+’ / ‘+all.length+’ cochés’;
+}
+function saveChecks(){
+const s=[…document.querySelectorAll(’.check-item’)].map(i=>i.classList.contains(‘done’));
+try{localStorage.setItem(‘reunion2-checks’,JSON.stringify(s));}catch(e){}
+}
+function loadChecks(){
+try{
+const s=JSON.parse(localStorage.getItem(‘reunion2-checks’)||’[]’);
+document.querySelectorAll(’.check-item’).forEach((it,i)=>{if(s[i])it.classList.add(‘done’);});
+}catch(e){}
+updateProg();
+}
+loadChecks();
+
+// Install hint
+const mob=/iPhone|iPad|Android/i.test(navigator.userAgent);
+const standalone=window.matchMedia(’(display-mode: standalone)’).matches||window.navigator.standalone;
+if(mob&&!standalone)document.getElementById(‘install-bar’).style.display=‘block’;
+
+// SW
+if(‘serviceWorker’ in navigator)navigator.serviceWorker.register(’./sw.js’).catch(()=>{});
+</script>
+
+</body>
+</html>
